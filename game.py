@@ -12,12 +12,12 @@ pygame.display.set_caption('Rythm Game')
 clock = pygame.time.Clock()
 
 font = pygame.font.Font('font/Pixeltype.ttf', 50)
-level = Level(screen, font)
 
 # set our music
 background_music = pygame.mixer.Sound('audio/music.wav')
 background_music.set_volume(0.2)
-background_music.play(loops = -1)
+
+level = Level(screen, font, background_music)
 
 create_button = pygame.USEREVENT + 1
 pygame.time.set_timer(create_button, 500)

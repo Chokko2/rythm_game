@@ -3,7 +3,8 @@ from button import Button
 from settings import *
 
 class Level:
-    def __init__(self, display_screen, font):
+    def __init__(self, display_screen, font, background_music):
+        self.background_music = background_music
         self.display_screen = display_screen
         self.buttons = pygame.sprite.Group()
         self.speed = 7
@@ -11,6 +12,7 @@ class Level:
         self.font = font
         self.score = 0
         self.game_active = True
+        background_music.play(loops=-1)
 
     def die(self):
         self.buttons.empty()
@@ -18,12 +20,14 @@ class Level:
         self.round_score = self.score
         self.score = 0
         self.speed = 7
+        self.background_music.stop()
 
     def check_for_button(self, button_clicked):
         found_clickable = False
 
         if not self.game_active:
             self.game_active = True
+            self.background_music.play(loops = -1)
             return
         elif self.game_active:
             for button in self.buttons:
