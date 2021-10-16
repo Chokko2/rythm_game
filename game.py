@@ -14,20 +14,21 @@ clock = pygame.time.Clock()
 font = pygame.font.Font('font/Pixeltype.ttf', 50)
 
 # set our music
-background_music = pygame.mixer.Sound('audio/music.wav')
+background_music = pygame.mixer.Sound('audio/Blarsa_-_Garden_Party.wav')
 background_music.set_volume(0.2)
+
+create_button = pygame.USEREVENT + 1
+pygame.time.set_timer(create_button, 400)
 
 level = Level(screen, font, background_music)
 
-create_button = pygame.USEREVENT + 1
-pygame.time.set_timer(create_button, 500)
 
 while True:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			exit()
-		elif event.type == create_button:
+		elif event.type == create_button and level.game_active:
 			level.buttons.add(Button(randint(0, 3)))
 		elif event.type == pygame.KEYDOWN:
 			level.check_for_button(event.key)

@@ -1,5 +1,6 @@
 import pygame
 from button import Button
+from beam import Beam
 from settings import *
 
 class Level:
@@ -13,6 +14,9 @@ class Level:
         self.score = 0
         self.game_active = True
         background_music.play(loops=-1)
+        self.beams = []
+        for i in range(4):
+            self.beams.append(Beam(i * screen_height / 4 + screen_height / 12 + 10))
 
     def die(self):
         self.buttons.empty()
@@ -43,18 +47,22 @@ class Level:
                 for button in self.buttons:
                     if button.clickable:
                         if button_clicked == pygame.K_h and button.color == 'Red':
+                            self.beams[0].draw = True
                             self.score += 1
                             self.speed += 0.1
                             button.kill()
                         elif button_clicked == pygame.K_j and button.color == 'Yellow':
+                            self.beams[1].draw = True
                             self.score += 1
                             self.speed += 0.1
                             button.kill()
                         elif button_clicked == pygame.K_k and button.color == 'Green':
+                            self.beams[2].draw = True
                             self.score += 1
                             self.speed += 0.1
                             button.kill()
                         elif button_clicked == pygame.K_l and button.color == 'Blue':
+                            self.beams[3].draw = True
                             self.score += 1
                             self.speed += 0.1
                             button.kill()
@@ -79,6 +87,10 @@ class Level:
             score_surface = self.font.render(f'Score: {self.score}', True, 'White')
             score_rect = score_surface.get_rect(topleft = (20, 20))
             self.display_screen.blit(score_surface, score_rect)
+
+            for beam in self.beams:
+                beam.update()
+                beam.show(self.display_screen)
 
         elif not self.game_active:
             self.display_screen.fill((150, 150, 150))
